@@ -76,6 +76,16 @@ public class RegistrarVendaCommandHandler : IRequestHandler<RegistrarVendaComman
 
         return Task.FromResult(true);
     }
+    
+    private void PublicarEventoSucesso(int idVenda, RegistrarVendaCommand command)
+    {
+        var vendaComSucesso = new VendaRealizadaComSucessoEvent
+        {
+            IdVenda = idVenda,
+            RegistrarVendaCommand = command 
+        };
+        _mediator.Publish(vendaComSucesso);
+    }
     ....
 ```
 
