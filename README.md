@@ -78,3 +78,37 @@ public class RegistrarVendaCommandHandler : IRequestHandler<RegistrarVendaComman
     }
     ....
 ```
+
+## Tratando os Events
+
+Utilizamos a implementação da interface INotificationHandler para tratar os eventos 
+
+```cs
+public class RegistrarVendaEventHandler :
+    INotificationHandler<VendaRealizadaComSucessoEvent>,
+    INotificationHandler<VendaRealizadaComErroEvent>
+{
+
+    private readonly IMediator _mediator;
+
+    public RegistrarVendaEventHandler(IMediator mediator)
+    {
+        this._mediator = mediator;
+    }
+
+    public Task Handle(VendaRealizadaComSucessoEvent notification, CancellationToken cancellationToken)
+    {
+        return Task.Run(() => {
+
+            var registrarPagamento = new RegistrarPagamentoCommand
+            {
+                IdVenda = notification.IdVenda,
+                DataPagamento = notification.RegistrarVendaCommand.DataPagamento,
+                ValorPago = notification.RegistrarVendaCommand.ValorPago
+            };
+
+            _mediator.Send(registrarPagamento);
+        });
+    }
+    ...
+```
