@@ -3,7 +3,7 @@ Comandos e Eventos com MediatR
 
 ```
 Install-Package MediatR
-Install-Pacakge MediatR.Extensions.Microsoft.DependencyInjection
+Install-Package MediatR.Extensions.Microsoft.DependencyInjection
 ```
 ## Injeção de Dependências
 
